@@ -1,5 +1,6 @@
 var scene, camera, renderer, mesh, meshBalloon;
 var meshFloor;
+var xscale = 0.1, yscale = 0.1, zscale = 0.1;
 var radius  = 0.75;
 
 //balloon stuff
@@ -26,8 +27,8 @@ function init(){
     new THREE.MeshBasicMaterial( { color:0x3b5998 } )
 	);
   meshBalloon.position.set(0, 2, 0);
-  meshBalloon.scale.set(1,1,3);
-  scene.add (meshBalloon);
+  meshBalloon.scale.set(xscale,yscale,zscale);
+ // scene.add (meshBalloon);
 
 	meshFloor = new THREE.Mesh(
 		new THREE.PlaneGeometry(40,40, 40,40),
@@ -44,7 +45,7 @@ function init(){
 	renderer.setSize(1280, 720);
 	document.body.appendChild(renderer.domElement);
   
- // spawnBalloons();
+  spawnBalloons();
 	animate();
 }
 
@@ -101,8 +102,10 @@ function keyUp(event){
 }
 
 function spawnBalloons(){
-  
-  
+	scene.add (meshBalloon);
+	
+	xscale += 200000;
+	renderer.render(scene, camera);
 }
 
 window.addEventListener('keydown', keyDown);

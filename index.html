@@ -23,6 +23,7 @@
     // and signed request each expire.
     var uid = response.authResponse.userID;
     var accessToken = response.authResponse.accessToken;
+    console.log('Successful login for userID: ' + response..authResponse.userID);
   } else if (response.status === 'not_authorized') {
     // The user hasn't authorized your application.  They
     // must click the Login button, or you must call FB.login

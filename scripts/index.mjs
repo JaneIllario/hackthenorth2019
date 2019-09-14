@@ -1,12 +1,13 @@
+// import { DeviceOrientationControls } from './game/entities/DeviceOrientationControls.mjs';
 var scene, camera, renderer, mesh, meshBalloon;
 var meshFloor;
 var xscale = 0.1, yscale = 0.1, zscale = 0.1;
 var radius  = 0.75;
 
-//balloon stuff
+//Camera controls
+var controls;
 
-
-
+//balloon stuffv
 var keyboard = {};
 var player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
 var USE_WIREFRAME = true;
@@ -14,7 +15,7 @@ var USE_WIREFRAME = true;
 function init(){
 	scene = new THREE.Scene();
 	camera = new THREE.PerspectiveCamera(90, 1280/720, 0.1, 1000);
-	
+	// var controls = new DeviceOrientationControls( camera );
 	mesh = new THREE.Mesh(
 		new THREE.BoxGeometry(1,1,1),
 		new THREE.MeshBasicMaterial({color:0xff4444})
@@ -89,7 +90,9 @@ function animate(){
   if(keyboard[40]){ // down key
     camera.position.y -= 0.1;
   }
-	
+
+  // controls.update();
+
 	renderer.render(scene, camera);
 }
 

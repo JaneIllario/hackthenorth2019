@@ -10,7 +10,7 @@
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&autoLogAppEvents=1&version=v4.0&appId=735428576909755"></script>
 <script src="node_modules/three/build/three.js"></script>
-<script src="scripts/index.js"></script>
+<script type="module" src="scripts/index.mjs"></script>
 <script>
 	  window.fbAsyncInit = function() {
 	    FB.init({
@@ -20,8 +20,8 @@
 	      version    : 'v4.0'
 	    });
 	      
-	    FB.AppEvents.logPageView();   
-	      
+	    FB.AppEvents.logPageView();
+
 	  };
 
 	  (function(d, s, id){
@@ -31,8 +31,27 @@
 	     js.src = "https://connect.facebook.net/en_US/sdk.js";
 	     fjs.parentNode.insertBefore(js, fjs);
 	   }(document, 'script', 'facebook-jssdk'));
+
+      // FB.getLoginStatus(function(response) {
+      //   if (response.status === 'connected') {
+      //     // The user is logged in and has authenticated your
+      //     // app, and response.authResponse supplies
+      //     // the user's ID, a valid access token, a signed
+      //     // request, and the time the access token
+      //     // and signed request each expire.
+      //     var uid = response.authResponse.userID;
+      //     var accessToken = response.authResponse.accessToken;
+      //   } else if (response.status === 'not_authorized') {
+      //     // The user hasn't authorized your application.  They
+      //     // must click the Login button, or you must call FB.login
+      //     // in response to a user gesture, to launch a login dialog.
+      //   } else {
+      //     // The user isn't logged in to Facebook. You can launch a
+      //     // login dialog with a user gesture, but the user may have
+      //     // to log in to Facebook before authorizing your application.
+      //   }
+      // });
 </script>
-<script src="scripts/facebook/fb_get_var.js"></script>
 <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="true"></div>
 </body>
 </html>

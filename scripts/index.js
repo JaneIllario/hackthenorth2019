@@ -24,7 +24,7 @@ function init(){
 	scene.add(meshFloor);
 
   meshBalloon = new THREE.Mesh(
-    new THREE.SphereGeometry(1, 2, 2),
+    new THREE.SphereGeometry(0.75, 5, 5),
     new THREE.MeshBasicMaterial( {color:0xff000} )
   )
   meshBalloon.position.set(0, 2, 0);
@@ -75,7 +75,7 @@ function animate(){
   if(keyboard[38]){ // up key
     camera.position.y += 0.1;
   }
-  if(keyboard[36]){ // up key
+  if(keyboard[40]){ // down key
     camera.position.y -= 0.1;
   }
 	

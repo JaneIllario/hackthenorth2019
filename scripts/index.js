@@ -1,5 +1,6 @@
-var scene, camera, renderer, mesh;
+var scene, camera, renderer, mesh, meshBalloon;
 var meshFloor;
+var radius  = 0.75;
 
 //balloon stuff
 
@@ -20,6 +21,13 @@ function init(){
 	mesh.position.y += 1; // Move the mesh up 1 meter
 	//ascene.add(mesh);
 	
+	 meshBalloon = new THREE.Mesh(
+    new THREE.SphereGeometry(radius, 32, 32),
+    new THREE.MeshBasicMaterial( { color:0x3b5998 } )
+	)
+  meshBalloon.position.set(0, 2, 0);
+  scene.add (meshBalloon);
+
 	meshFloor = new THREE.Mesh(
 		new THREE.PlaneGeometry(40,40, 40,40),
 		new THREE.MeshBasicMaterial({color:0xffffff, wireframe:USE_WIREFRAME})
@@ -35,7 +43,7 @@ function init(){
 	renderer.setSize(1280, 720);
 	document.body.appendChild(renderer.domElement);
   
-  spawnBalloons();
+ // spawnBalloons();
 	animate();
 }
 
@@ -44,6 +52,8 @@ function animate(){
 	
 	mesh.rotation.x += 0.01;
 	mesh.rotation.y += 0.02;
+
+	meshBalloon.radius += 1;
 	
 	// Keyboard movement inputs
 	if(keyboard[87]){ // W key
@@ -90,13 +100,7 @@ function keyUp(event){
 }
 
 function spawnBalloons(){
-  var meshBalloon = new THREE.Mesh(
-    new THREE.SphereGeometry(0.75, 32, 32),
-    new THREE.MeshBasicMaterial( { color:0x3b5998 } )
-	)
-  meshBalloon.position.set(0, 2, 0);
- 
-  scene.add (meshBalloon);
+  
   
 }
 

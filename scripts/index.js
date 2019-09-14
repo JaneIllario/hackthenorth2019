@@ -1,5 +1,10 @@
-var scene, camera, renderer, mesh;
-var meshFloor, meshBalloon, meshBalloon2;
+var scene, camera, renderer, mesh, meshBalloon;
+var meshFloor;
+var radius  = 0.75;
+
+//balloon stuff
+
+
 
 var keyboard = {};
 var player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
@@ -16,6 +21,14 @@ function init(){
 	mesh.position.y += 1; // Move the mesh up 1 meter
 	//ascene.add(mesh);
 	
+  meshBalloon = new THREE.Mesh(
+    new THREE.SphereGeometry(radius, 32, 32),
+    new THREE.MeshBasicMaterial( { color:0x3b5998 } )
+	);
+  meshBalloon.position.set(0, 2, 0);
+  meshBalloon.scale.set(1,1,3);
+  scene.add (meshBalloon);
+
 	meshFloor = new THREE.Mesh(
 		new THREE.PlaneGeometry(40,40, 40,40),
 		new THREE.MeshBasicMaterial({color:0xffffff, wireframe:USE_WIREFRAME})
@@ -23,12 +36,6 @@ function init(){
 	meshFloor.rotation.x -= Math.PI / 2; // Rotate the floor 90 degrees
 	scene.add(meshFloor);
 
-  meshBalloon = new THREE.Mesh(
-    new THREE.SphereGeometry(1, 2, 2),
-    new THREE.MeshBasicMaterial( {color:0xff000} )
-  )
-  meshBalloon.position.set(0, 2, 0);
-  scene.add (meshBalloon);
 
 	camera.position.set(0, player.height, -5);
 	camera.lookAt(new THREE.Vector3(0,player.height,0));
@@ -36,7 +43,8 @@ function init(){
 	renderer = new THREE.WebGLRenderer();
 	renderer.setSize(1280, 720);
 	document.body.appendChild(renderer.domElement);
-	
+  
+ // spawnBalloons();
 	animate();
 }
 
@@ -45,6 +53,8 @@ function animate(){
 	
 	mesh.rotation.x += 0.01;
 	mesh.rotation.y += 0.02;
+
+	meshBalloon.radius += 1;
 	
 	// Keyboard movement inputs
 	if(keyboard[87]){ // W key
@@ -64,7 +74,7 @@ function animate(){
 		camera.position.x += Math.sin(camera.rotation.y - Math.PI/2) * player.speed;
 		camera.position.z += -Math.cos(camera.rotation.y - Math.PI/2) * player.speed;
 	}
-	//test
+	
 	// Keyboard turn inputs
 	if(keyboard[37]){ // left arrow key
 		camera.rotation.y -= player.turnSpeed;
@@ -88,6 +98,11 @@ function keyDown(event){
 
 function keyUp(event){
 	keyboard[event.keyCode] = false;
+}
+
+function spawnBalloons(){
+  
+  
 }
 
 window.addEventListener('keydown', keyDown);

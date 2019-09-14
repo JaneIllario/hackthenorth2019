@@ -64,7 +64,7 @@ function animate(){
 		camera.position.x += Math.sin(camera.rotation.y - Math.PI/2) * player.speed;
 		camera.position.z += -Math.cos(camera.rotation.y - Math.PI/2) * player.speed;
 	}
-	
+	//test
 	// Keyboard turn inputs
 	if(keyboard[37]){ // left arrow key
 		camera.rotation.y -= player.turnSpeed;

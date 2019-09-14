@@ -7,6 +7,8 @@
     <meta name="author" content="SitePoint">
 </head>
 <body>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&autoLogAppEvents=1&version=v4.0&appId=735428576909755"></script>
 <script src="node_modules/three/build/three.js"></script>
 <script src="scripts/index.js"></script>
 <script>
@@ -30,5 +32,6 @@
 	     fjs.parentNode.insertBefore(js, fjs);
 	   }(document, 'script', 'facebook-jssdk'));
 </script>
+<div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="true"></div>
 </body>
 </html>

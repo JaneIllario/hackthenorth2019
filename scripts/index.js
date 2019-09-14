@@ -1,5 +1,9 @@
 var scene, camera, renderer, mesh;
-var meshFloor, meshBalloon, meshBalloon2;
+var meshFloor;
+
+//balloon stuff
+
+
 
 var keyboard = {};
 var player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
@@ -23,12 +27,6 @@ function init(){
 	meshFloor.rotation.x -= Math.PI / 2; // Rotate the floor 90 degrees
 	scene.add(meshFloor);
 
-  meshBalloon = new THREE.Mesh(
-    new THREE.SphereGeometry(0.75, 5, 5),
-    new THREE.MeshBasicMaterial( {color:0xff000} )
-  )
-  meshBalloon.position.set(0, 2, 0);
-  scene.add (meshBalloon);
 
 	camera.position.set(0, player.height, -5);
 	camera.lookAt(new THREE.Vector3(0,player.height,0));
@@ -36,7 +34,8 @@ function init(){
 	renderer = new THREE.WebGLRenderer();
 	renderer.setSize(1280, 720);
 	document.body.appendChild(renderer.domElement);
-	
+  
+  spawnBalloons();
 	animate();
 }
 
@@ -88,6 +87,17 @@ function keyDown(event){
 
 function keyUp(event){
 	keyboard[event.keyCode] = false;
+}
+
+function spawnBalloons(){
+  var meshBalloon = new THREE.Mesh(
+    new THREE.SphereGeometry(0.75, 32, 32),
+    new THREE.MeshBasicMaterial( { color:0x3b5998 } )
+	)
+  meshBalloon.position.set(0, 2, 0);
+ 
+  scene.add (meshBalloon);
+  
 }
 
 window.addEventListener('keydown', keyDown);

@@ -21,11 +21,12 @@ function init(){
 	mesh.position.y += 1; // Move the mesh up 1 meter
 	//ascene.add(mesh);
 	
-	 meshBalloon = new THREE.Mesh(
+  meshBalloon = new THREE.Mesh(
     new THREE.SphereGeometry(radius, 32, 32),
     new THREE.MeshBasicMaterial( { color:0x3b5998 } )
-	)
+	);
   meshBalloon.position.set(0, 2, 0);
+  meshBalloon.scale.set(1,1,3);
   scene.add (meshBalloon);
 
 	meshFloor = new THREE.Mesh(

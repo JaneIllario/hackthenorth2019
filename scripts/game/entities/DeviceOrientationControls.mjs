@@ -10,7 +10,7 @@ import {
   Math as _Math,
   Quaternion,
   Vector3
-} from "../../../build/three.module.js";
+} from "../../../node_modules/three/build/three.min";
 
 var DeviceOrientationControls = function ( object ) {
 

@@ -12,74 +12,54 @@
 <script src="node_modules/three/build/three.js"></script>
 <script type="module" src="scripts/index.mjs"></script>
 <script>
-	function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+ function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
     console.log('statusChangeCallback');
     console.log(response);                   // The current login status of the person.
-    if (response.status === 'connected') {
-    // The user is logged in and has authenticated your
-    // app, and response.authResponse supplies
-    // the user's ID, a valid access token, a signed
-    // request, and the time the access token 
-    // and signed request each expire.
-    var uid = response.authResponse.userID;
-    var accessToken = response.authResponse.accessToken;
-    console.log('Successful login for userID: ' + response..authResponse.userID);
-  } else if (response.status === 'not_authorized') {
-    // The user hasn't authorized your application.  They
-    // must click the Login button, or you must call FB.login
-    // in response to a user gesture, to launch a login dialog.
-  } else {
-    // The user isn't logged in to Facebook. You can launch a
-    // login dialog with a user gesture, but the user may have
-    // to log in to Facebook before authorizing your application.
+    if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+      testAPI();  
+    } else {                                 // Not logged into your webpage or we are unable to tell.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this webpage.';
+    }
   }
-  }
-
 
   function checkLoginState() {               // Called when a person is finished with the Login Button.
     FB.getLoginStatus(function(response) {   // See the onlogin handler
       statusChangeCallback(response);
     });
   }
-	  window.fbAsyncInit = function() {
-	    FB.init({
-	      appId      : '735428576909755',
-	      cookie     : true,
-	      xfbml      : true,
-	      version    : 'v4.0'
-	    });
-	      
-	    FB.AppEvents.logPageView();
 
-	  };
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '735428576909755',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v4.0'
+    });
+      
+	FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
+      statusChangeCallback(response);        // Returns the login status.
+    });
+  };
 
-	  (function(d, s, id){
-	     var js, fjs = d.getElementsByTagName(s)[0];
-	     if (d.getElementById(id)) {return;}
-	     js = d.createElement(s); js.id = id;
-	     js.src = "https://connect.facebook.net/en_US/sdk.js";
-	     fjs.parentNode.insertBefore(js, fjs);
-	   }(document, 'script', 'facebook-jssdk'));
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
 
-      // FB.getLoginStatus(function(response) {
-      //   if (response.status === 'connected') {
-      //     // The user is logged in and has authenticated your
-      //     // app, and response.authResponse supplies
-      //     // the user's ID, a valid access token, a signed
-      //     // request, and the time the access token
-      //     // and signed request each expire.
-      //     var uid = response.authResponse.userID;
-      //     var accessToken = response.authResponse.accessToken;
-      //   } else if (response.status === 'not_authorized') {
-      //     // The user hasn't authorized your application.  They
-      //     // must click the Login button, or you must call FB.login
-      //     // in response to a user gesture, to launch a login dialog.
-      //   } else {
-      //     // The user isn't logged in to Facebook. You can launch a
-      //     // login dialog with a user gesture, but the user may have
-      //     // to log in to Facebook before authorizing your application.
-      //   }
-      // });
+	function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    
+    });
+  }
+   
 </script>
 <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="true"></div>
 </body>

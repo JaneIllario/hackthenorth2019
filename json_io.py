@@ -4,6 +4,7 @@ import sys
 
 from flask import Flask, render_template, request, redirect, Response, jsonify
 import random, json
+import facebook
 
 app = Flask(__name__)
 
@@ -21,13 +22,86 @@ def pass_login_data():
 	data = request.get_json()
 	accessToken = data.authResponse.accessToken
 	userID = data.authResponse.accessToken
-	result = ''
 
-	for item in data:
-		# loop over every row
-		result += str(item['make']) + '\n'
+    # graph = facebook.GraphAPI(access_token=accessToken, version="2.12")
+    # # Get the active user's friends.
+    # friends = graph.get_connections(id='me', connection_name='friends')
 
-	return result
+    	# URL used to access friend information from account
+    FRIEND_URL = 'https://graph.facebook.com/me/friends?access_token=%s'
+
+    # URL to retrieve the profile picture from an account
+    PHOTO_URL = 'http://graph.facebook.com/%s/picture?type=square'
+
+    # MD5 Hashes of blank images
+    BLANK_HASHES = []
+    # MD5 Hash of the blank male image
+    BLANK_HASHES.append('af10cdc4144e0a16b097a293b0d95422')
+    # MD5 hash of the blank female image
+    BLANK_HASHES.append('04aaffaf075732616c0c35ae3e28bce6')
+
+    # Initial URL (before paging)
+    url = FRIEND_URL % accessToken
+
+    # Complete friend list (from all pages)
+    friend_id_list = []
+
+    def get_json_data(url):
+        """
+        Retrieves the JSON response from Facebook and returns a parsed element.
+        """
+        urldata = urlopen(url)
+        fh = urldata.read()
+
+        return json.loads(fh)
+
+
+    def get_friends(json_data, friend_ids):
+        """
+        Takes the JSON data object and adds the friend IDs to a given list.
+        """
+        try:
+            for friend in json_data["data"]:
+                friend_ids.append(friend["id"])
+        except KeyError:
+            print "Error: Data element not found in response."
+            if json_data["error"]:
+                print "{0}: {1}".format(json_data["error"]["type"],
+                                        json_data["error"]["message"])
+            raise SystemExit(1)
+
+        return friend_ids
+
+
+    print "Retrieving first page of friend results ..."
+    json_data = get_json_data(url)
+    friend_id_list = get_friends(json_data, friend_id_list)
+
+    while json_data is not None:
+        try:
+            print "Retrieving next page of friend results ..."
+            url = json_data["paging"]["next"]
+            json_data = get_json_data(url)
+            friend_id_list = get_friends(json_data, friend_id_list)
+        except KeyError:
+            json_data = None
+
+    print "Friend retrieval complete, {0} friends found.".format(len(friend_id_list))
+
+    # Cache the images at the beginning so they don't have to download every use.
+    friend_images = []
+    print "Downloading profile pictures ..."
+    for x in friend_id_list:
+        img_url = PHOTO_URL % x
+        img_obj = cStringIO.StringIO(urlopen(img_url).read())
+        # Avoid adding the blank images
+        if md5(img_obj.getvalue()).hexdigest() not in BLANK_HASHES:
+            friend_images.append(Image.open(img_obj))
+
+    for it, img in friend_images:
+        img.save("profile-"+ str(it)+".jpg", "JPEG")
+
+    print("Done saving profiles")
 
 #Get data from the ble controller. Does not currently work.
 @app.route("/ble", methods = ['POST'])

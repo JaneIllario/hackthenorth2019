@@ -1,0 +1,17 @@
+﻿<Properties StartupConfiguration="{EF0ABFE5-1158-1E53-3A06-65B4C407E5D4}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameScript.cs">
+    <Files>
+      <File FileName="Assets/Scripts/RotateCube.cs" Line="23" Column="32" />
+      <File FileName="Assets/Standard Assets/Effects/ImageEffects/Scripts/VignetteAndChromaticAberration.cs" Line="36" Column="1" />
+      <File FileName="Assets/Scripts/BalloonScript.cs" Line="43" Column="31" />
+      <File FileName="Assets/Scripts/GameScript.cs" Line="10" Column="20" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

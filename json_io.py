@@ -18,6 +18,8 @@ def index():  # pragma: no cover
 def pass_login_data():
 	# read json + reply
 	data = request.get_json()
+	accessToken = data.authResponse.accessToken
+	userID = data.authResponse.accessToken
 	result = ''
 
 	for item in data:

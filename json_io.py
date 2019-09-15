@@ -99,7 +99,7 @@ def pass_login_data():
             friend_images.append(Image.open(img_obj))
 
     for it, img in friend_images:
-        img.save("profile-"+ str(it)+".jpg", "JPEG")
+        img.save("data/profile-"+ str(it)+".jpg", "JPEG")
 
     print("Done saving profiles")
 

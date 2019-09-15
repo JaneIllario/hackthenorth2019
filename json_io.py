@@ -5,6 +5,7 @@ import sys
 from flask import Flask, render_template, request, redirect, Response, jsonify
 import random, json
 import facebook
+from azure_face_detection import face_detection
 
 app = Flask(__name__)
 
@@ -102,6 +103,8 @@ def pass_login_data():
         img.save("data/profile-"+ str(it)+".jpg", "JPEG")
 
     print("Done saving profiles")
+    azure_face_detection.face_detection()
+
 
 #Get data from the ble controller. Does not currently work.
 @app.route("/ble", methods = ['POST'])

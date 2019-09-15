@@ -27,6 +27,7 @@ assert FACE_SUBSCRIPTION_KEY
 face_api_url = 'https://eastus.api.cognitive.microsoft.com/face/v1.0/detect'
 
 image_data = open(image_path, "rb")
+im = Image.open(image_path)
 
 headers = {'Content-Type': 'application/octet-stream',
            'Ocp-Apim-Subscription-Key': FACE_SUBSCRIPTION_KEY}
@@ -41,22 +42,13 @@ response = requests.post(face_api_url, params=params, headers=headers, data=imag
 response.raise_for_status()
 faces = response.json()
 
-# Display the original image and overlay it with the face information.
-image_read = open(image_path, "rb").read()
-image = Image.open(BytesIO(image_read))
-
-plt.figure(figsize=(8, 8))
-ax = plt.imshow(image, alpha=1)
-for face in faces:
+for it, face in enumerate(faces):
     fr = face["faceRectangle"]
-    fa = face["faceAttributes"]
-    origin = (fr["left"], fr["top"])
-    p = patches.Rectangle(
-        origin, fr["width"], fr["height"], fill=False, linewidth=2, color='b')
-    ax.axes.add_patch(p)
-    plt.text(origin[0], origin[1], "%s, %d"%(fa["gender"].capitalize(), fa["age"]),
-             fontsize=20, weight="bold", va="bottom")
-_ = plt.axis("off")
-plt.show()
+    left = fr["left"]
+    top = fr["top"]
+    width = fr["width"]
+    height = fr["height"]
+    cropped_img = im.crop((left, top, (left+width), (top+height)))
+    cropped_img.save("face-" + str(it) + ".jpg", "JPEG")
 
-print(faces)
+print("done")

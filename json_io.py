@@ -43,7 +43,7 @@ def load_ble_data():
 def unload_ble_data():
     result = getThrowVal()
     setThrowVal(None)
-    return jsonify(result), 200
+    return render_template('bs.html',val=str(result))
 
 throwVal = None
 def getThrowVal():
